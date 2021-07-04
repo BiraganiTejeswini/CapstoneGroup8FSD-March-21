@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let obj of foodArr">
+      <div class="card" style="width: 100%;border:0px">
+
+        <img src={{obj.imageUrl}} class="card-img-top" alt="no-image " width="00" height="200">
+        <div class="card-body">
+          <b>{{obj.foodCategory}}</b>-{{obj.foodName}} <br>
+          <b> Restuarant: </b> {{" "+obj.restuarant.restuarantName}}<br>
+          <br>
+          <b id="price"> {{obj.foodPrice | currency:'INR'}}</b><br>
+          <button *ngIf="isTokenPresent()==true" id={{obj.foodId}} [disabled]="isAdded(obj)" (click)="addToCart(obj)"
+            class="btn btn-primary btn-sm"> Add to cart
+            <i class="fa fa-shopping-cart" style="font-size:20px ;color:white"></i></button>
+          <button *ngIf="isTokenPresent()==false" id={{obj.foodId}} [disabled]="isAdded(obj)" routerLink="/login"
+            class="btn btn-primary btn-sm"> Add to cart
+            <i class="fa fa-shopping-cart" style="font-size:20px ;color:white"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>

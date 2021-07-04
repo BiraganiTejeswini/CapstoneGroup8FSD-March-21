@@ -1,0 +1,207 @@
+<div class="container">
+    <form class="form-horizontal" #buy="ngForm">
+        <!-- Customer Details -->
+        <h3>Customer Details</h3>
+        <div class="card-body">
+            <form [formGroup]="registerForm">
+                <div class="form-group">
+                    <label for="FirstName">FirstName</label>
+                    <input id="FirstName" [(ngModel)]="firstName" value={{firstName}} readonly class="form-control"
+                        required minlength="2" 
+                        [ngClass]="{ 'is-invalid': registerForm.get('FirstName').touched && registerForm.get('FirstName').invalid }"
+                        formControlName="FirstName" />
+                    <span class="invalid-feedback">
+                        <span *ngIf="registerForm.get('FirstName').hasError('required')">FirstName can't be
+                            blank.</span>
+
+                        <span *ngIf="registerForm.get('FirstName').hasError('minlength')">FirstName must contain minimum
+                            2 characters</span>
+                    </span>
+
+                </div>
+                <div class="form-group">
+                    <label for="LastName">LastName</label>
+                    <input id="LastName" [(ngModel)]="lastName" value={{lastName}} readonly class="form-control"
+                        required minlength="2" size=40 
+                        [ngClass]="{ 'is-invalid': registerForm.get('LastName').touched && registerForm.get('LastName').invalid }"
+                        formControlName="LastName" />
+                    <span class="invalid-feedback">
+                        <span *ngIf="registerForm.get('LastName').hasError('required')">LastName can't be blank.</span>
+
+                        <span *ngIf="registerForm.get('LastName').hasError('minlength')">LastName must contain minimum 2
+                            characters</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" [(ngModel)]="email" value={{email}} readonly size=40  class="form-control"
+                        [ngClass]="{ 'is-invalid': registerForm.get('email').touched && registerForm.get('email').invalid }"
+                        formControlName="email" />
+                    <span class="invalid-feedback">
+                        <span *ngIf="registerForm.get('email').hasError('required')">Email can't be blank.</span>
+                        <span *ngIf="registerForm.get('email').hasError('email')">Email must be valid.</span>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <!-- Delivery Address -->
+        <div>
+            <h3>Delivery Address</h3>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Country</label>
+                <div class="col-sm-10">
+                    <select id="country" class="form-control" name="country" [(ngModel)]="address.country"
+                        value="India">
+                        <option selected value="India">India</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Street</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="street" size=40 minlength="6"
+                        [(ngModel)]="address.street" required #street="ngModel"
+                        [class.is-invalid]="street.invalid && street.touched">
+                    <div *ngIf="street.errors && (street.invalid && street.touched)">
+                        <small class="text-danger" *ngIf="street.errors.required">Street name is required</small>
+                        <small class="text-danger" *ngIf="street.errors.minlength">Street name should contains 6
+                            characters</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">City</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="city" size=40 minlength="3" [(ngModel)]="address.city"
+                        required pattern="[a-zA-z]+" #city="ngModel" [class.is-invalid]="city.invalid && city.touched">
+                    <div *ngIf="city.errors && (city.invalid && city.touched)">
+                        <small class="text-danger" *ngIf="city.errors.required">City name is required</small>
+                        <small class="text-danger" *ngIf="city.errors.pattern">city name cannot have digits</small>
+                        <small class="text-danger" *ngIf="city.errors.minlength">City name should contain 3
+                            characters</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">State</label>
+                <div class="col-sm-10">
+                    <select id="state" class="form-control" name="state" [(ngModel)]="address.state">
+                        <option value="0">--Select--</option>
+                        <option *ngFor="let state of states">
+                            {{state.stateName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Zip Code</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="zipcode" maxlength="6" pattern="^[0-9]{6}$" size=40
+                        required [(ngModel)]="address.zipcode" #zipcode="ngModel">
+                    <div *ngIf="zipcode.errors && (zipcode.invalid && zipcode.touched)">
+                        <small class="text-danger" *ngIf="zipcode.errors.required">ZipCode is required field</small>
+                        <small class="text-danger" *ngIf="zipcode.errors.pattern">Zip Code is invalid</small>
+                        <small class="text-danger" *ngIf="zipcode.errors.maxlength">Zip Code is 6 digits</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card Details -->
+        <div>
+            <h3>Card Details</h3>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Card Type</label>
+                <div class="col-sm-10">
+                    <select class="form-control">
+                        <option value="Visa">Visa</option>
+                        <option value="MasterCard">Master Card</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Name on Card</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="name" size=40 minlength="2" required
+                        pattern="[a-zA-z ]+" [(ngModel)]="card.cardname" #cardname="ngModel"
+                        [class.is-invalid]="cardname.invalid && cardname.touched">
+                    <div *ngIf="cardname.errors && (cardname.invalid && cardname.touched)">
+                        <small class="text-danger" *ngIf="cardname.errors.required">Name is required field</small>
+                        <small class="text-danger" *ngIf="cardname.errors.pattern">Name cannot have digits</small>
+                        <small class="text-danger" *ngIf="cardname.errors.minlength">Name should contain atleast 2
+                            characters</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Card Number</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="cardnum" maxlength="16" size=40
+                        [(ngModel)]="card.cardnum" pattern="^[0-9]{16}$" required #cardnum="ngModel">
+                    <div *ngIf="cardnum.errors && (cardnum.invalid && cardnum.touched)">
+                        <small class="text-danger" *ngIf="cardnum.errors.required">Card Number is required field</small>
+                        <small class="text-danger" *ngIf="cardnum.errors.pattern">Card Number is invalid</small>
+                        <small class="text-danger" *ngIf="cardnum.errors.maxlength">Card Number is 16 digits</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">CVV</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="securitycode" maxlength="3" size=40
+                        [(ngModel)]="card.cvv" pattern="^[0-9]{3}$" required #cvv="ngModel">
+                    <div *ngIf="cvv.errors && (cvv.invalid && cvv.touched)">
+                        <small class="text-danger" *ngIf="cvv.errors.required">CVV is required field</small>
+                        <small class="text-danger" *ngIf="cvv.errors.pattern">CVV Number is invalid</small>
+                        <small class="text-danger" *ngIf="cvv.errors.maxlength">CVV Number is 3 digits</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Expiry Month</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="month">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Expiry Year</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="year">
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                        <option>2027</option>
+                        <option>2028</option>
+                        <option>2029</option>
+                        <option>2030</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        &nbsp;&nbsp;
+        <div class="text-center">
+            <button class="btn btn-primary" [routerLink]="['/']" [disabled]="buy.invalid" (click)="cartClearItems()"
+                (click)="saveOrderDetails()">Proceed</button>
+            &nbsp;
+            <button routerLink="/cart" class="btn btn-danger">Go Back</button>
+        </div>
+    </form>
+</div>

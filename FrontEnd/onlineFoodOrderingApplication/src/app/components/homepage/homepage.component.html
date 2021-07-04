@@ -1,0 +1,29 @@
+<div class="container c" *ngIf="decision!=''">
+  <h6>Sort Food Items By Price</h6>
+  <button class="btn btn-primary btn-sm" (click)="getFoodPriceAsc()">Low To High</button>
+  &nbsp;&nbsp;
+  <button class="btn btn-primary btn-sm" (click)="getFoodPriceDesc()">High To Low</button>
+ </div>
+ <div class="container">
+  <div class="row">
+    <h2 *ngIf="decision!=''">Best Food in {{decision}}</h2><br>
+    <!-- currentStatus !== 'open' || currentStatus !== 'reopen' -->
+    <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let obj of menu">
+      <div class="card" style="width: 100%;border:0px">
+        <img src={{obj.imageUrl}} class="card-img-top" alt="mnb " width="250" height="250">
+        <div class="card-body">
+          <div class="card-text ">
+            <b>{{obj.foodCategory}}</b><br>
+            {{obj.foodName}}<br><br>
+            <b id="price"> {{obj.foodPrice | currency:'INR'}}</b><br>
+            <button *ngIf="isTokenPresent()==true" id={{obj.foodId}} [disabled]="isAdded(obj)" (click)="addToCart(obj)"
+              class="btn btn-primary btn-sm center"> Add to cart
+              <i class="fa fa-shopping-cart" style="font-size:20px ;color:white"></i></button>
+            <button *ngIf="isTokenPresent()==false" id={{obj.foodId}} [disabled]="isAdded(obj)" routerLink="/login"
+              class="btn btn-primary btn-sm center"> Add to cart
+              <i class="fa fa-shopping-cart" style="font-size:20px ;color:white"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

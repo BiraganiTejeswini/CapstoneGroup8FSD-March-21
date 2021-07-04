@@ -1,0 +1,66 @@
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand"> <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj80JNVWp8izZsFrzyXei59z7e4-YZb8L4clLe4PXJvw9RELHn-hx8KeOHFX_Y9qNbpGE&usqp=CAU"
+                        class="navbar-brand" width="100%" height="50"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" routerLink="Adigas">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Restuarants
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" routerLink="Adigas">Adigas</a></li>
+                                <li><a class="dropdown-item" routerLink="Rotighar">RotiGhar</a></li>
+                                <li><a class="dropdown-item" routerLink="PunjabiRasoi">PunjabiRasoi</a></li>
+                                <li><a class="dropdown-item" routerLink="Udipi">Udipi</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <form class="d-flex">
+
+                                <input class="form-control me-2" type="search" [(ngModel)]="foodName" name="foodName"
+                                    placeholder="Search for the dishes" required="required" size="120"
+                                    aria-label="Search" #name />
+                                <button class="btn btn-outline-primary" type="submit" routerLink="/search"
+                                    (click)="searchFood(name.value)">Search</button>
+                            </form>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <button *ngIf="isTokenPresent()==true" (click)="redirectCart()" class="btn btn-primary btn-sm ">
+                <i class="fa fa-shopping-cart " style="font-size:20px ;color:white"></i></button>
+            <button *ngIf="isTokenPresent()==false" routerLink="/login" class="btn btn-primary btn-sm">
+                <i class="fa fa-shopping-cart" style="font-size:20px ;color:white"></i></button>
+            &nbsp;&nbsp;
+            <div class="btn btn-primary" *ngIf="isTokenPresent()==false" routerLink="register">
+                Signup
+            </div> &nbsp;&nbsp;
+            <div class="btn btn-primary" *ngIf="isTokenPresent()==false" routerLink="login">
+                Login
+            </div>
+
+            <div class="col-sm-3">
+                <span *ngIf="isTokenPresent()==true" class="welcome-text"><b>Welcome:</b>
+                    {{service2.customerEmail}} </span>
+            </div>
+            <button *ngIf="isTokenPresent()==true" class="btn btn-primary" type="button" (click)="LogOut()">Logout
+            </button>
+        </nav>
+    </div>
+    <br>
+</body>

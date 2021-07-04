@@ -1,0 +1,55 @@
+<div *ngIf="!isDisplay" class="container center">
+    <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvFcNZvhMffXxELm_OHneJwXImODFVODfCyA&usqp=CAU" style="width: 100%; height: 100%; "
+    alt="no-image " id="emptyCart"/>
+</div>
+<div class="container" *ngIf="isDisplay">
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <td style="width: 200px;"><b>Product Image</b></td>
+                <td style="width: 200px;"><b>Food name</b></td>
+                <td style="width: 350px;"><b>Food Price</b></td>
+                <td><b>Quantity</b></td>
+                <td><b>Total</b></td>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item1 of items">
+                <td><img src="{{item1.imageUrl}}" /></td>
+
+                <b>{{item1.foodCategory}}</b>-{{item1.foodName}} <br>
+                <td>{{item1.foodPrice| currency:'INR'}}</td>
+                <td>
+                    <div class="form-inline">
+                        <button class="btn btn-primary" id={{item1.foodId}} (click)="plus(item1)"><i
+                                class="fa fa-plus"></i></button>
+                        {{item1.quantity}}
+                        <button class="btn btn-primary" (click)="minus(item1)"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <br>
+                    <div>
+                        <button class="btn btn-danger" (click)=" removeCartItem(item1.foodId)"
+                            routerLink="/Adigas">Remove</button>
+
+                    </div>
+                </td>
+                <td>Subtotal: {{item1.foodPrice * item1.quantity| currency:'INR'}}</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td>
+                    <p><b>Total Quantity: {{totalqty}}</b> </p>
+                    <p><b>Free Delivery</b></p>
+                    <p><b>Total Price: {{sum| currency:'INR'}}</b></p>
+                    <button *ngIf="isTokenPresent()==false" class="btn btn-primary btn-sm right"
+                        routerLink="/login">CheckOut</button>
+                    <button *ngIf="isTokenPresent()==true" class="btn btn-primary btn-sm right"
+                        (click)="sendQuantityPrice()" routerLink="/payment">CheckOut</button>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
